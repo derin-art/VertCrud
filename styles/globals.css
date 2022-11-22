@@ -1,3 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+
 html,
 body {
   padding: 0;
@@ -23,4 +28,45 @@ a {
     color: white;
     background: black;
   }
+}
+
+.checkSticky {
+  background-color: rgba(83, 83, 203, 0.69);
+  height: 100vh;
+  width: 100vw;
+  position: sticky;
+  top: 0px;
+  font-size: 10rem;
+  display: flex;
+}
+.checkSticky1 {
+  background-color: rgba(12, 12, 237, 0.69);
+  height: 100vh;
+  width: 100vw;
+  position: sticky;
+  top: 0px;
+  z-index: 2;
+  display: flex;
+}
+
+#ca {
+  width: 50vw;
+  background-color: aquamarine;
+  height: 100vh;
+}
+
+#cb {
+  width: 50%;
+  background-color: antiquewhite;
+  border: 2px red solid;
+  height: 100%;
+  z-index: 100;
+  position: fixed;
+  top: 0px;
+  right: 0;
+}
+
+@font-face {
+  font-family: "CorUp";
+  src: url("../public/Fonts/Cormorant_Upright/CormorantUpright-Regular.ttf");
 }
