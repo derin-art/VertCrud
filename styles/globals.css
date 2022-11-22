@@ -70,3 +70,8 @@ a {
   font-family: "CorUp";
   src: url("../public/Fonts/Cormorant_Upright/CormorantUpright-Regular.ttf");
 }
+
+@font-face {
+  font-family: "Poppins";
+  src: url("../public/Fonts/Poppins/Poppins-Regular.ttf");
+}

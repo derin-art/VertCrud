@@ -5,6 +5,7 @@ import { NextFetchEvent } from "next/server";
 import styles from "../styles/Home.module.css";
 import Login from "../components/Login";
 import axios from "axios";
+import { useAuth } from "context/firebaseUserContext";
 
 export default function Home() {
   return (

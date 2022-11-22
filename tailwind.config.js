@@ -8,6 +8,7 @@ module.exports = {
     extend: {
       fontFamily: {
         CorUp: ["CorUp", "serif"],
+        Poppins: ["Poppins", "san-serif"],
       },
     },
   },
