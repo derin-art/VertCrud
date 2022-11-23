@@ -8,11 +8,13 @@ export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const pathName = router.pathname;
   return (
-    <Wrapper>
-      <div className={`w-full h-full pt-4 ${pathName === "/" && "pt-0"}`}>
-        <Component {...pageProps} />
-      </div>
-    </Wrapper>
+    <AuthUserProvider>
+      <Wrapper>
+        <div className={`pt-4 ${pathName === "/" && "pt-0 w-full h-full "}`}>
+          <Component {...pageProps} />
+        </div>
+      </Wrapper>
+    </AuthUserProvider>
   );
 }
 

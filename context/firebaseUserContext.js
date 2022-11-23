@@ -1,16 +1,17 @@
 import useFirebaseAuth from "../Hooks/useFireBaseAuth";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect } from "react";
 
 const authUserContext = createContext({
   authUser: null,
   loading: true,
-  SignInWithEmailAndPassword: async () => {},
-  CreateUserWithEmailAndPassword: async () => {},
+  SignInWithEmailAndPassword: async (email, password) => {},
+  CreateUserWithEmailAndPassword: async (email, password) => {},
   SignOut: async () => {},
 });
 
 function AuthUserProvider({ children }) {
   const auth = useFirebaseAuth();
+
   useEffect(() => {
     if (auth.authUser) {
       console.log(auth.authUser);

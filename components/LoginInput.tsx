@@ -6,6 +6,8 @@ import { AnimatePresence } from "framer-motion";
 import UserLoginHead from "../public/Icons/userLoginHead";
 import useMediaQuery from "../Hooks/useMediaQuery";
 import { async } from "@firebase/util";
+import { useRouter } from "next/router";
+import { useAuth } from "../context/firebaseUserContext";
 
 type LoginProps = {
   SignOut: any;
@@ -14,6 +16,8 @@ type LoginProps = {
 };
 
 export default function LoginInput(props: LoginProps) {
+  const router = useRouter();
+  const { SignInWithEmailAndPassword } = useAuth();
   const { height, width } = useMediaQuery();
 
   console.log(useMediaQuery());
@@ -26,7 +30,14 @@ export default function LoginInput(props: LoginProps) {
   const [registerPassword, setRegisterPassword] = useState("");
   const [newUser, setNewUser] = useState(false);
   const LoginFuc = async (email: string, password: string) => {
-    return props.SignInWithEmailAndPassword(email, password);
+    console.log("senr");
+    await SignInWithEmailAndPassword(email, password)
+      .then(() => {
+        router.push("/items");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   const CreateUserFuc = async (email: string, password: string) => {
     return props.CreateUserWithEmailAndPassword(email, password);
@@ -93,8 +104,8 @@ export default function LoginInput(props: LoginProps) {
                 </div>
                 <div className="flex w-full">
                   <button
-                    onClick={() => {
-                      LoginFuc(email, password);
+                    onClick={async () => {
+                      await LoginFuc(email, password);
                     }}
                     className="border p-4 border-black text-white bg-black w-full"
                   >

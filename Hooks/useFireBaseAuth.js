@@ -1,5 +1,6 @@
 import firebaseApp from "../pages/api/firebase";
 import { useState, useEffect } from "react";
+import { type } from "os";
 import {
   getAuth,
   signOut,
@@ -14,6 +15,7 @@ const formatAuthUser = (user) => ({
 });
 
 export default function useFirebaseAuth() {
+  const auth = getAuth();
   const [authUser, setAuthUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -48,8 +50,26 @@ export default function useFirebaseAuth() {
   };
 
   const SignInWithEmailAndPassword = async (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password);
+    console.log("Sent");
+
+    return signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        console.log("Signed In");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
+
+  function SignIn(email, password) {
+    return signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        console.log("Signed In");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   const SignOut = () => {
     return signOut(auth).then(() => {
@@ -75,6 +95,10 @@ export default function useFirebaseAuth() {
     },
   };
 
+  const sign = (email, password) => {
+    signInWithEmailAndPassword(auth, email, password);
+  };
+
   return {
     authUser,
     variants,
@@ -82,5 +106,8 @@ export default function useFirebaseAuth() {
     SignOut,
     SignInWithEmailAndPassword,
     CreateUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    SignIn,
+    sign,
   };
 }
