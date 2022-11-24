@@ -12,7 +12,10 @@ export default function Header() {
       <div className="flex absolute right-10 p-1">
         {links.map((item) => {
           return (
-            <button className="ml-4 font-Poppins text-sm text-black">
+            <button
+              className="ml-4 font-Poppins text-sm text-black"
+              key={item.name}
+            >
               {item.name}
             </button>
           );

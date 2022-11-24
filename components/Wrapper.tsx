@@ -23,7 +23,9 @@ export default function Wrapper(props: WrapperProps) {
 
   return (
     <div className="h-screen w-screen">
-      <Header></Header>
+      <div className="w-full ">
+        <Header></Header>
+      </div>
       {props.children}
     </div>
   );
