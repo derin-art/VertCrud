@@ -2,6 +2,7 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Wrapper from "../components/Wrapper";
 import { useRouter } from "next/router";
+import { motion } from "framer-motion";
 import { useAuth, AuthUserProvider } from "../context/firebaseUserContext";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -10,7 +11,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <AuthUserProvider>
       <Wrapper>
-        <div className={`pt-4 ${pathName === "/" && "pt-0 w-full h-full "}`}>
+        <div className={`pt-4 ${pathName === "/" && "pt-0 w-full h-full "} `}>
           <Component {...pageProps} />
         </div>
       </Wrapper>

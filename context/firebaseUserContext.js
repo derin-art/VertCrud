@@ -7,6 +7,7 @@ const authUserContext = createContext({
   SignInWithEmailAndPassword: async (email, password) => {},
   CreateUserWithEmailAndPassword: async (email, password) => {},
   SignOut: async () => {},
+  CreateItem: async (items) => {},
 });
 
 function AuthUserProvider({ children }) {
@@ -18,6 +19,7 @@ function AuthUserProvider({ children }) {
       if (auth.authUser.email) {
         console.log(auth.authUser.email);
         if (!auth.userData) {
+          return;
           auth.getUserData(auth.authUser.email);
         }
       }

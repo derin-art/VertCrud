@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { MongoClient } from "mongodb";
 
-export default async function Mongo(handler, req, res) {
+export default async function Mongo(req, res) {
   try {
     if (mongoose.connections[0]) {
       await mongoose
@@ -12,9 +12,8 @@ export default async function Mongo(handler, req, res) {
         .then(() => {
           console.log("Mongoose is connected");
         });
-      handler(req, res);
     } else {
-      handler(req, res);
+      return;
     }
   } catch (err) {
     console.log(err);

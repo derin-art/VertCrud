@@ -4,7 +4,10 @@ import { async } from "@firebase/util";
 import cloudinary from "../../DataBase/Cloudinary";
 import Mongo from "../../DataBase/Mongo";
 import upload from "../../MiddleWare/Multer";
-import { ShopItem } from "Models/items";
+
+import { promises } from "fs";
+
+const { ShopItem } = require("../../Models/items");
 
 const handler = nextConnect<NextApiRequest, NextApiResponse>({
   onError: (err, req, res, next) => {
@@ -28,29 +31,51 @@ handler.post(
     });
 
     try {
-      const urlArr = [];
+      let urlArr: object[];
+      urlArr = [];
+      console.log(req.files);
+      let finalUR = {
+        1: "",
+        2: "",
+        3: "",
+      };
 
-      Object.entries(req.files).forEach(async (file: any) => {
-        const isMain = file[1] === req.body.main;
-        const result = await cloudinary.v2.uploader.upload(file[1][0].path);
-        urlArr.push({ imgUrl: result.secure_url, main: isMain });
-      });
+      const cloudData = await Object.entries(req.files).map(
+        async (file: any) => {
+          const isMain = file[1] === "Main";
+          const result: any = await cloudinary.v2.uploader
+            .upload(file[1][0].path)
+            .catch((err) => {
+              console.log(err);
+            });
+          return { imgurl: result.secure_url, isMain };
+        }
+      );
 
+      const allImageUrls = await Promise.all(cloudData);
+      console.log(allImageUrls);
+
+      return res.status(200).send(allImageUrls);
       return;
-
       const newShopItem = await ShopItem.create({
         urls: [],
         name: req.body.name,
         price: req.body.price,
       });
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   }
 );
-
 export const config = {
   api: {
     bodyParser: false,
   },
 };
+
+/* .then((cl) => {
+            finalUR[1] = cl.secure_url;
+            urlArr = [...urlArr, { imgUrl: cl.secure_url }];
+          }) */
 
 export default handler;

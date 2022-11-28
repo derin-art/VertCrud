@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
-const shopItem = new Schema(
+const shopItemSchema = new Schema(
   {
     name: {
       type: String,
@@ -28,5 +28,10 @@ const shopItem = new Schema(
   { minimize: false }
 );
 
-const ShopItem = mongoose.model("ShopItem", shopItem);
+console.log(mongoose.models, mongoose.modelNames);
+
+const containsShopItems = Object.keys(mongoose.models).includes("shopItem");
+const ShopItem = containsShopItems
+  ? mongoose.models.shopItem
+  : mongoose.model("shopItem", shopItemSchema);
 export { ShopItem };

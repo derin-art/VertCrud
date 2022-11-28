@@ -72,7 +72,7 @@ export default function LoginInput(props: LoginProps) {
             exit={"out"}
             className="absolute "
           >
-            {newUser ? (
+            {!newUser ? (
               <section className="flex flex-col ">
                 <div className=" flex items-center justify-center mb-4">
                   {UserHead(

@@ -1,14 +1,20 @@
 const multer = require("multer");
 const path = require("path");
 
-module.exports = multer({
+export default multer({
   storage: multer.diskStorage({}),
   fileFilter: (req, file, cb) => {
-    let ext = path.extname(file.originalname);
-    if (ext !== "jpg" && ext !== "jpeg" && ext !== "png") {
+    if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+      cb(null, true);
+    } else {
+      cb(new Error("the file type is wrong"), false);
+    }
+
+    /*     let ext = path.extname(file.originalname);
+    if (ext !== /jpg/i && ext !== /jpeg/i && ext !== /png/i) {
       cb(new Error("file type not supported"), false);
       return;
     }
-    cb(null, true);
+    cb(null, true); */
   },
 });

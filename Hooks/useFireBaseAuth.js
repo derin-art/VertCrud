@@ -1,5 +1,7 @@
 import firebaseApp from "../pages/api/firebase";
 import { useState, useEffect } from "react";
+import axios from "axios";
+import FormData from "form-data";
 import { type } from "os";
 import {
   getAuth,
@@ -61,6 +63,22 @@ export default function useFirebaseAuth() {
       });
   };
 
+  const CreateItem = async (items) => {
+    const config = {
+      headers: { "content-type": "multipart/form-data" },
+    };
+    const formdata = new FormData();
+    formdata.append("Main", items.Main);
+    formdata.append("Sec", items.Sec);
+    formdata.append("Alt", items.Alt);
+    const data = await axios.post("/api/Images", formdata).catch((err) => {
+      console.log(err);
+    });
+    if (data) {
+      console.log(data);
+    }
+  };
+
   function SignIn(email, password) {
     return signInWithEmailAndPassword(auth, email, password)
       .then(() => {
@@ -109,5 +127,6 @@ export default function useFirebaseAuth() {
     signInWithEmailAndPassword,
     SignIn,
     sign,
+    CreateItem,
   };
 }
