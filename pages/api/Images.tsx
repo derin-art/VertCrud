@@ -4,6 +4,7 @@ import { async } from "@firebase/util";
 import cloudinary from "../../DataBase/Cloudinary";
 import Mongo from "../../DataBase/Mongo";
 import upload from "../../MiddleWare/Multer";
+import { buildImageUrl } from "cloudinary-build-url";
 
 import { promises } from "fs";
 
@@ -48,7 +49,24 @@ handler.post(
             .catch((err) => {
               console.log(err);
             });
-          return { imgurl: result.secure_url, isMain };
+          console.log(result);
+
+          const blurUrl = buildImageUrl(result.public_id, {
+            cloud: {
+              cloudName: process.env.NEXT_PUBLIC_CLOUD_NAME,
+            },
+            transformations: {
+              effect: "blur:1000",
+              quality: 1,
+            },
+          });
+
+          return {
+            imgUrl: result.secure_url,
+            isMain,
+            cloudId: result.public_id,
+            blurUrl: blurUrl,
+          };
         }
       );
 

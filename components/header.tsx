@@ -11,7 +11,7 @@ export default function Header() {
   const isOnCreateItems = pathName === "/CreateItem";
   return (
     <div
-      className={`w-full relative h-4 flex ${
+      className={`w-full relative h-4 flex pt-2 ${
         pathName === "/" && "hidden"
       } p-1 z-40`}
     >
@@ -22,7 +22,7 @@ export default function Header() {
       >
         Vert
       </div>
-      <div className="flex absolute right-10 p-1">
+      <div className="flex absolute right-10 p-1 ">
         {links.map((item) => {
           return (
             <Link

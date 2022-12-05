@@ -10,9 +10,9 @@ import { useRouter } from "next/router";
 import { useAuth } from "../context/firebaseUserContext";
 
 type LoginProps = {
-  SignOut: any;
-  CreateUserWithEmailAndPassword: any;
-  SignInWithEmailAndPassword: any;
+  SignOut?: any;
+  CreateUserWithEmailAndPassword?: any;
+  SignInWithEmailAndPassword?: any;
 };
 
 export default function LoginInput(props: LoginProps) {
@@ -76,7 +76,7 @@ export default function LoginInput(props: LoginProps) {
               <section className="flex flex-col ">
                 <div className=" flex items-center justify-center mb-4">
                   {UserHead(
-                    "border rounded-full border-gray-300 p-2",
+                    "border rounded-full border-gray-300 p-2 fill-neutral-200",
                     "100",
                     "100"
                   )}
@@ -88,7 +88,7 @@ export default function LoginInput(props: LoginProps) {
                     }}
                     placeholder="Input Email"
                     type="email"
-                    className="border-black p-4 border mb-4"
+                    className="border-black p-4 border mb-6"
                   ></input>
                 </div>
                 <div>
@@ -99,7 +99,7 @@ export default function LoginInput(props: LoginProps) {
                     name="password"
                     placeholder="Input Password"
                     type="password"
-                    className="border-black p-4 border mb-4"
+                    className="border-black p-4 border mb-6"
                   ></input>
                 </div>
                 <div className="flex w-full">
@@ -117,7 +117,7 @@ export default function LoginInput(props: LoginProps) {
               <section className="flex flex-col ">
                 <div className=" flex items-center justify-center mb-4">
                   {UserLoginHead(
-                    "border rounded-full border-gray-300 p-2",
+                    "border rounded-full border-gray-300 p-2 fill-neutral-200",
                     "100",
                     "100"
                   )}
@@ -129,7 +129,7 @@ export default function LoginInput(props: LoginProps) {
                     }}
                     placeholder="Input Email"
                     type="email"
-                    className="border-black p-4 border mb-4"
+                    className="border-black p-4 border mb-6"
                   ></input>
                 </div>
                 <div>
@@ -140,7 +140,7 @@ export default function LoginInput(props: LoginProps) {
                     name="password"
                     placeholder="Input Registration Password"
                     type="password"
-                    className="border-black p-4 border mb-4"
+                    className="border-black p-4 border mb-6"
                   ></input>
                 </div>
                 <div className="flex w-full">
@@ -162,9 +162,9 @@ export default function LoginInput(props: LoginProps) {
         onClick={() => {
           setNewUser((prev) => !prev);
         }}
-        className="mb-32 mt-4 text-xs "
+        className="mb-32 mt-8 text-xs "
       >
-        {newUser ? "New User?" : "Previous User?"}
+        {!newUser ? "New User?" : "Previous User?"}
       </button>
     </div>
   );

@@ -21,7 +21,12 @@ const shopItemSchema = new Schema(
           type: String,
           required: [true, "Shopping Item Url is a required"],
         },
-        main: Boolean,
+        isMain: Boolean,
+        cloudId: {
+          type: String,
+          required: [true, "Shopping Item cloud id is a required"],
+        },
+        blurUrl: String,
       },
     ],
   },
