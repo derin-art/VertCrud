@@ -27,7 +27,8 @@
     "**/*.tsx",
     "types.d.ts",
     "Hooks/useFireBaseAuth.js",
-    "jest.setup.js"
+    "jest.setup.js",
+    "jest.config.js"
   ],
   "exclude": ["node_modules"]
 }

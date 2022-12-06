@@ -19,8 +19,8 @@ export default function ImageCreate(props: ImageCreateProps) {
   const [imageSrc, setImageSrc] = useState("");
   return (
     <div>
-      <div className="border-black relative border group  hover:border-black cursor-pointer h-full flex shadow-md items-center justify-center duration-300">
-        <p className="absolute -top-[1px] right-0 text-sm p-2 bg-black text-white rounded-bl-lg z-40">
+      <div className="border-black relative border group cursor-pointer h-full flex shadow-md items-center justify-center duration-300">
+        <p className="absolute -top-[1px] right-0 text-sm p-2 bg-black text-white rounded-bl-lg z-20">
           {props.n} Img
         </p>
         <label
@@ -38,6 +38,7 @@ export default function ImageCreate(props: ImageCreateProps) {
             height="400"
             width="300"
             alt="TestImage"
+            className="object-cover w-[300px] h-[400px]"
             unoptimized={true}
             src={imageSrc ? imageSrc : P1.src}
           ></Image>
@@ -64,8 +65,6 @@ export default function ImageCreate(props: ImageCreateProps) {
               }
 
               createImageUrl(e);
-
-              console.log(src);
 
               return { ...prev, file: e.target.files[0] };
             });

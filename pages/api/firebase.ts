@@ -8,3 +8,5 @@ const firebaseApp = initializeApp({
 });
 
 export default firebaseApp;
+
+/*  resolver: "jest-node-exports-resolver", */

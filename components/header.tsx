@@ -11,29 +11,26 @@ export default function Header() {
   const isOnCreateItems = pathName === "/CreateItem";
   return (
     <div
-      className={`w-full relative h-4 flex pt-2 ${
+      className={`w-full fixed h-4 justify-center md:justify-start flex  pt-2 ${
         pathName === "/" && "hidden"
       } p-1 z-40`}
     >
       <div
-        className={`font-CorUp text-6xl ml-4 ${
+        className={`font-CorUp text-3xl md:text-6xl md:ml-4 md:mt-0 -mt-1 ${
           isOnCreateItems ? "text-white" : "text-black"
         }`}
       >
         Vert
       </div>
-      <div className="flex absolute right-10 p-1 ">
+      <div className="flex absolute md:right-8 right-4 right p-1 font-Poppins text-sm text-black">
         {links.map((item) => {
           return (
-            <Link
-              href={item.to}
-              className="ml-4 font-Poppins text-sm text-black"
-              key={item.name}
-            >
+            <Link href={item.to} className="lg:ml-8 ml-4" key={item.name}>
               {item.name}
             </Link>
           );
         })}
+        <button className="ml-4 lg:ml-8">Logout</button>
       </div>
     </div>
   );

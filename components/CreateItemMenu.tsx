@@ -10,35 +10,39 @@ export default function CreateItemMenu() {
     <div className="flex flex-col text-white font-Poppins p-2 ">
       {inputs.map((item) => {
         return (
-          <div key={item.Name} className="mb-6 text-lg relative ">
-            <div className="flex items-center" key={item.Name}>
+          <div key={item.Name} className="mb-4 lg:text-lg relative ">
+            <div className="flex flex-col relative" key={item.Name}>
               <p className="font-CorUp"> {item.Name}:</p>
               {item.type === "Textbox" ? (
                 <textarea
-                  className="text-black p-2 absolute right-2 mt-8  rounded text-base"
+                  className="text-black p-2 w-full right-2  rounded text-base"
                   placeholder={item.placeholder}
                 ></textarea>
               ) : (
                 <input
                   placeholder={item.placeholder}
                   type={`${item.type === "Number" && "number"}`}
-                  className="text-black p-2 absolute right-2  rounded text-base "
+                  className="text-black p-2 w-full right-2  rounded text-base"
                 ></input>
               )}
             </div>
           </div>
         );
       })}
-      <div className="flex mt-7 text-lg relative">
+      <div className="flex lg:flex-row flex-col  mt-4 lg:text-lg relative">
         <p className="font-CorUp">Collection:</p>
         <select
           placeholder="Collection"
           name="collection"
-          className="absolute right-2 p-2 font-Poppins text-base text-black rounded"
+          className="lg:absolute right-0 p-2 font-Poppins text-base text-black rounded"
           id="col"
         >
           {collection.map((item) => {
-            return <option value={item}>{item}</option>;
+            return (
+              <option className="" key={item} value={item}>
+                {item}
+              </option>
+            );
           })}
         </select>
       </div>

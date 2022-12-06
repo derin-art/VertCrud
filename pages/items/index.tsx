@@ -7,9 +7,6 @@ export default function Items() {
       <div className="mt-10 font-Poppins text-5xl -ml-4 border-b border-black">
         No Items Created.
       </div>
-      <div>
-        <ImageTest></ImageTest>
-      </div>
     </div>
   );
 }
