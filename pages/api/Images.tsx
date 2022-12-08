@@ -79,6 +79,8 @@ handler.post(
         urls: [],
         name: req.body.name,
         price: req.body.price,
+        Description: req.body.Description,
+        collection: req.body.collection,
       });
     } catch (err) {
       console.log(err);

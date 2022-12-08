@@ -71,6 +71,10 @@ export default function useFirebaseAuth() {
     formdata.append("Main", items.Main);
     formdata.append("Sec", items.Sec);
     formdata.append("Alt", items.Alt);
+    formdata.append("name", items.name);
+    formdata.append("price", items.price);
+    formdata.append("collection", items.collection);
+    formdata.append("Description", items.Description);
     const data = await axios.post("/api/Images", formdata).catch((err) => {
       console.log(err);
     });

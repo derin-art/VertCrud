@@ -1,11 +1,38 @@
-export default function CreateItemMenu() {
+import { type } from "os";
+
+type CreateItemMenuProps = {
+  setProductDetails?: any;
+  productDetails: {
+    name: string;
+    price: number;
+    collection: string;
+    Description: string;
+  };
+};
+
+export default function CreateItemMenu(props: CreateItemMenuProps) {
   const inputs = [
-    { Name: "Name", type: "String", placeholder: "Input Name" },
-    { Name: "Price", type: "Number", placeholder: "Input Item Price" },
-    { Name: "Description", type: "Textbox", placeholder: "Input Description" },
+    {
+      Name: "Name",
+      type: "String",
+      placeholder: "Input Name",
+      propVal: props.productDetails.name,
+    },
+    {
+      Name: "Price",
+      type: "Number",
+      placeholder: "Input Item Price",
+      propVal: props.productDetails.price,
+    },
+    {
+      Name: "Description",
+      type: "Textbox",
+      placeholder: "Input Description",
+      propVal: props.productDetails.Description,
+    },
   ];
 
-  const collection = ["Casual", "Risque", "Varsity", "Christmas"];
+  const collection = ["Casual", "NightLife", "Varsity", "Christmas"];
   return (
     <div className="flex flex-col text-white font-Poppins p-2 ">
       {inputs.map((item) => {
@@ -15,11 +42,30 @@ export default function CreateItemMenu() {
               <p className="font-CorUp"> {item.Name}:</p>
               {item.type === "Textbox" ? (
                 <textarea
+                  onChange={(e) => {
+                    props.setProductDetails((prev: any) => {
+                      return { ...prev, Description: e.target.value };
+                    });
+                  }}
+                  value={item.propVal}
                   className="text-black p-2 w-full right-2  rounded text-base"
                   placeholder={item.placeholder}
                 ></textarea>
               ) : (
                 <input
+                  name={item.Name}
+                  value={item.propVal}
+                  onChange={(e) => {
+                    if (e.target.name === "Name") {
+                      props.setProductDetails((prev: any) => {
+                        return { ...prev, name: e.target.value };
+                      });
+                    } else if (e.target.name === "Price") {
+                      props.setProductDetails((prev: any) => {
+                        return { ...prev, price: e.target.value };
+                      });
+                    }
+                  }}
                   placeholder={item.placeholder}
                   type={`${item.type === "Number" && "number"}`}
                   className="text-black p-2 w-full right-2  rounded text-base"
@@ -36,6 +82,12 @@ export default function CreateItemMenu() {
           name="collection"
           className="lg:absolute right-0 p-2 font-Poppins text-base text-black rounded"
           id="col"
+          value={props.productDetails.collection}
+          onChange={(e) => {
+            props.setProductDetails((prev: any) => {
+              return { ...prev, collection: e.target.value };
+            });
+          }}
         >
           {collection.map((item) => {
             return (

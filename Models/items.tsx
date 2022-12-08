@@ -14,6 +14,10 @@ const shopItemSchema = new Schema(
     },
     data: {},
     Description: { type: String },
+    collection: {
+      type: String,
+      require: [true, "Item's collection is required to save it"],
+    },
     DateCreated: { type: Date, default: Date.now() },
     urls: [
       {

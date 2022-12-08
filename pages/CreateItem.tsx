@@ -11,8 +11,10 @@ import Test2 from "../public/TestImages/Test2.jpg";
 import Test3 from "../public/TestImages/Test3.jpg";
 import Test4 from "../public/TestImages/Test4.webp";
 import Test5 from "../public/TestImages/Test5.png";
+import { useAuth } from "context/firebaseUserContext";
 
 export default function CreateItem() {
+  const { CreateItem } = useAuth();
   const TestImages = [Test1, Test2];
   const inputs = ["Main", "Sec", "Alt"];
   const [Main, setMain] = useState({ file: null, name: "Main" });
@@ -22,10 +24,12 @@ export default function CreateItem() {
 
   const [productDetails, setProductDetails] = useState({
     name: "",
-    price: null,
+    price: 0,
     collection: "",
     Description: "",
   });
+
+  console.log(productDetails);
 
   const variants = {
     out: {
@@ -124,21 +128,20 @@ export default function CreateItem() {
 
   return (
     <div className="w-screen p-8 font-Poppins">
-      {isTablet && (
-        <button
-          onClick={() => {
-            setIsMobileMenuOpen((prev) => !prev);
-          }}
-          className={`duration-300 top-4 left-2 fixed z-50 flex items-center justify-center text-xs ${
-            isMobileMenuOpen ? "text-white" : "text-black"
-          }`}
-        >
-          {EditIcon(
-            `${isMobileMenuOpen ? "fill-white" : "fill-black"} duration-300`
-          )}{" "}
-          {isMobileMenuOpen ? "Close Details" : "Add Details"}
-        </button>
-      )}
+      <button
+        onClick={() => {
+          setIsMobileMenuOpen((prev) => !prev);
+        }}
+        className={`duration-300 top-4 left-2 fixed z-50 flex items-center justify-center text-xs ${
+          isMobileMenuOpen ? "text-white" : "text-black"
+        } ${isTablet ? "" : "hidden"}`}
+      >
+        {EditIcon(
+          `${isMobileMenuOpen ? "fill-white" : "fill-black"} duration-300`
+        )}{" "}
+        {isMobileMenuOpen ? "Close Details" : "Add Details"}
+      </button>
+
       <div className="w-full flex">
         {
           <AnimatePresence>
@@ -167,7 +170,10 @@ export default function CreateItem() {
                       {EditIcon("border fill-white ")}
                     </div>
                     <div className="pt-24 p-2">
-                      <CreateItemMenu></CreateItemMenu>
+                      <CreateItemMenu
+                        productDetails={productDetails}
+                        setProductDetails={setProductDetails}
+                      ></CreateItemMenu>
                     </div>
                   </motion.div>
                 </motion.div>
@@ -176,15 +182,19 @@ export default function CreateItem() {
           </AnimatePresence>
         }
 
-        {isTablet && (
-          <motion.div
-            className={`fixed top-0 ${
-              isMobileMenuOpen ? "left-0" : "-left-[250px]"
-            } duration-300 w-[240px] bg-black z-40 h-full pt-14 `}
-          >
-            <MobileCreateItemMenu></MobileCreateItemMenu>
-          </motion.div>
-        )}
+        <motion.div
+          className={`fixed top-0 ${
+            isMobileMenuOpen ? "left-0" : "-left-[250px]"
+          } duration-300 w-[240px] bg-black z-40 h-full pt-14 ${
+            isTablet ? "" : "hidden"
+          }`}
+        >
+          <CreateItemMenu
+            productDetails={productDetails}
+            setProductDetails={setProductDetails}
+          ></CreateItemMenu>
+        </motion.div>
+
         <div className="-mt-4 w-full ">
           <div className="flex border-b justify-end border-black mb-2 text-4xl items-center">
             Create Items
@@ -194,6 +204,19 @@ export default function CreateItem() {
               return (
                 <button
                   key={item}
+                  onClick={async () => {
+                    if (!Main.file) return;
+                    if (!productDetails.name) return;
+                    if (!productDetails.price) return;
+                    if (!productDetails.collection) return;
+
+                    CreateItem({
+                      Alt: Alt.file,
+                      Main: Main.file,
+                      Sec: Sec.file,
+                      ...productDetails,
+                    });
+                  }}
                   className="ml-4 px-4 p-2 bg-black text-white text-lg "
                 >
                   {item}
