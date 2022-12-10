@@ -29,6 +29,9 @@ export default function useFirebaseAuth() {
   const authStateChanged = async (authState) => {
     if (!authState) {
       setAuthUser(null);
+      if (typeof window !== "undefined") {
+        window.sessionStorage.setItem("authState", null);
+      }
       setLoading(false);
       return;
     }
@@ -36,6 +39,9 @@ export default function useFirebaseAuth() {
     setLoading(true);
     var formattedUser = formatAuthUser(authState);
     setAuthUser(formattedUser);
+    if (typeof window !== "undefined") {
+      window.sessionStorage.setItem("authState", formattedUser);
+    }
     setLoading(false);
   };
 
@@ -63,6 +69,19 @@ export default function useFirebaseAuth() {
       });
   };
 
+  const getItems = async () => {
+    const config = {
+      headers: { "content-type": "multipart/form-data" },
+    };
+    const data = await axios.get("/api/Images", config).catch((err) => {
+      console.log(err);
+    });
+    if (data) {
+      console.log(data);
+      return data;
+    }
+  };
+
   const CreateItem = async (items) => {
     const config = {
       headers: { "content-type": "multipart/form-data" },
@@ -80,6 +99,7 @@ export default function useFirebaseAuth() {
     });
     if (data) {
       console.log(data);
+      return data;
     }
   };
 
@@ -124,6 +144,7 @@ export default function useFirebaseAuth() {
   return {
     authUser,
     variants,
+    getItems,
     loading,
     SignOut,
     SignInWithEmailAndPassword,

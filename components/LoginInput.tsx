@@ -42,10 +42,11 @@ export default function LoginInput(props: LoginProps) {
   const CreateUserFuc = async (email: string, password: string) => {
     return props.CreateUserWithEmailAndPassword(email, password);
   };
+  let xDisplacement = isSmall ? 30 : 100;
   const variants = {
     out: {
       opacity: 0,
-      x: isSmall ? 30 : 100,
+      x: xDisplacement,
       transition: {
         duration: 0.75,
       },

@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
+import mongoose, { model, Model, Document, Schema } from "mongoose";
 
-const Schema = mongoose.Schema;
+const ModelSchema = mongoose.Schema;
 
-const shopItemSchema = new Schema(
+const shopItemSchema = new ModelSchema(
   {
     name: {
       type: String,
@@ -14,7 +14,7 @@ const shopItemSchema = new Schema(
     },
     data: {},
     Description: { type: String },
-    collection: {
+    itemCollection: {
       type: String,
       require: [true, "Item's collection is required to save it"],
     },
@@ -36,8 +36,8 @@ const shopItemSchema = new Schema(
   },
   { minimize: false }
 );
-
-console.log(mongoose.models, mongoose.modelNames);
+/* 
+console.log(mongoose.models, mongoose.modelNames); */
 
 const containsShopItems = Object.keys(mongoose.models).includes("shopItem");
 const ShopItem = containsShopItems

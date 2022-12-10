@@ -25,11 +25,9 @@ export default function CreateItem() {
   const [productDetails, setProductDetails] = useState({
     name: "",
     price: 0,
-    collection: "",
+    collection: "Casual",
     Description: "",
   });
-
-  console.log(productDetails);
 
   const variants = {
     out: {
@@ -210,7 +208,7 @@ export default function CreateItem() {
                     if (!productDetails.price) return;
                     if (!productDetails.collection) return;
 
-                    CreateItem({
+                    await CreateItem({
                       Alt: Alt.file,
                       Main: Main.file,
                       Sec: Sec.file,

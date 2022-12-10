@@ -5,6 +5,7 @@ import cloudinary from "../../DataBase/Cloudinary";
 import Mongo from "../../DataBase/Mongo";
 import upload from "../../MiddleWare/Multer";
 import { buildImageUrl } from "cloudinary-build-url";
+import multiparty from "multiparty";
 
 import { promises } from "fs";
 
@@ -20,13 +21,8 @@ const handler = nextConnect<NextApiRequest, NextApiResponse>({
   },
 });
 
-handler.post(
-  upload.fields([
-    { name: "Main", maxCount: 1 },
-    { name: "Sec", maxCount: 1 },
-    { name: "Alt", maxCount: 1 },
-  ]),
-  async (req: any, res) => {
+handler
+  .post(async (req: any, res) => {
     await Mongo().catch((err) => {
       console.log(err);
     });
@@ -41,9 +37,19 @@ handler.post(
         3: "",
       };
 
-      const cloudData = await Object.entries(req.files).map(
+      const form = new multiparty.Form();
+      const data: any = await new Promise((resolve, reject) => {
+        form.parse(req, function (err, fields, files) {
+          if (err) reject({ err });
+          resolve({ fields, files });
+        });
+      });
+
+      console.log("sds", data);
+
+      const cloudData = await Object.entries(data.files).map(
         async (file: any) => {
-          const isMain = file[1] === "Main";
+          const isMain = file[0] === "Main";
           const result: any = await cloudinary.v2.uploader
             .upload(file[1][0].path)
             .catch((err) => {
@@ -56,7 +62,7 @@ handler.post(
               cloudName: process.env.NEXT_PUBLIC_CLOUD_NAME,
             },
             transformations: {
-              effect: "blur:1000",
+              effect: "blur:200",
               quality: 1,
             },
           });
@@ -73,20 +79,33 @@ handler.post(
       const allImageUrls = await Promise.all(cloudData);
       console.log(allImageUrls);
 
-      return res.status(200).send(allImageUrls);
-      return;
       const newShopItem = await ShopItem.create({
-        urls: [],
-        name: req.body.name,
-        price: req.body.price,
-        Description: req.body.Description,
-        collection: req.body.collection,
+        urls: [...allImageUrls],
+        name: data.fields.name[0],
+        price: parseInt(data.fields.price[0]),
+        Description: data.fields.Description[0],
+        itemCollection: data.fields.collection[0],
       });
+
+      return res.status(200).send(newShopItem);
     } catch (err) {
       console.log(err);
     }
-  }
-);
+  })
+  .get(async (req, res) => {
+    console.log("Sent");
+    await Mongo().catch((err) => {
+      console.log(err);
+    });
+    try {
+      const allShoppingItems = await ShopItem.find({});
+
+      return res.status(200).send(allShoppingItems);
+    } catch (err) {
+      console.log(err);
+    }
+  });
+
 export const config = {
   api: {
     bodyParser: false,
@@ -99,3 +118,9 @@ export const config = {
           }) */
 
 export default handler;
+
+/*  upload.fields([
+      { name: "Main", maxCount: 1 },
+      { name: "Sec", maxCount: 1 },
+      { name: "Alt", maxCount: 1 },
+    ]), */

@@ -66,6 +66,11 @@ a {
   right: 0;
 }
 
+.stickyheader {
+  position: sticky;
+  top: 50px;
+}
+
 @font-face {
   font-family: "CorUp";
   src: url("../public/Fonts/Cormorant_Upright/CormorantUpright-Regular.ttf");
