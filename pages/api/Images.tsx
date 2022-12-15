@@ -25,17 +25,13 @@ handler
   .post(async (req: any, res) => {
     await Mongo().catch((err) => {
       console.log(err);
+      return;
     });
 
     try {
       let urlArr: object[];
       urlArr = [];
       console.log(req.files);
-      let finalUR = {
-        1: "",
-        2: "",
-        3: "",
-      };
 
       const form = new multiparty.Form();
       const data: any = await new Promise((resolve, reject) => {
@@ -68,6 +64,7 @@ handler
           });
 
           return {
+            imgType: file[0],
             imgUrl: result.secure_url,
             isMain,
             cloudId: result.public_id,
@@ -77,7 +74,7 @@ handler
       );
 
       const allImageUrls = await Promise.all(cloudData);
-      console.log(allImageUrls);
+      console.log("sdsdsd", allImageUrls);
 
       const newShopItem = await ShopItem.create({
         urls: [...allImageUrls],
@@ -96,11 +93,26 @@ handler
     console.log("Sent");
     await Mongo().catch((err) => {
       console.log(err);
+      return err;
     });
     try {
       const allShoppingItems = await ShopItem.find({});
 
       return res.status(200).send(allShoppingItems);
+    } catch (err) {
+      console.log(err);
+    }
+  })
+  .delete(async (req, res) => {
+    await Mongo().catch((err) => {
+      console.log(err);
+      return;
+    });
+    try {
+      const shoppingItemAfterDelete = await ShopItem.findByIdAndDelete(
+        req.query.id
+      );
+      return res.status(200).send(shoppingItemAfterDelete);
     } catch (err) {
       console.log(err);
     }

@@ -31,6 +31,7 @@ const shopItemSchema = new ModelSchema(
           required: [true, "Shopping Item cloud id is a required"],
         },
         blurUrl: String,
+        imgType: String,
       },
     ],
   },

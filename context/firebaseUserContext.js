@@ -8,6 +8,7 @@ const authUserContext = createContext({
   CreateUserWithEmailAndPassword: async (email, password) => {},
   SignOut: async () => {},
   CreateItem: async (items) => {},
+  EditItem: async (items, id) => {},
 });
 
 function AuthUserProvider({ children }) {

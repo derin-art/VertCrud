@@ -1,4 +1,5 @@
 import { type } from "os";
+import useCollections from "../Hooks/useCollections";
 
 type CreateItemMenuProps = {
   setProductDetails?: any;
@@ -32,7 +33,7 @@ export default function CreateItemMenu(props: CreateItemMenuProps) {
     },
   ];
 
-  const collection = ["Casual", "NightLife", "Varsity", "Christmas"];
+  const collection = useCollections();
   return (
     <div className="flex flex-col text-white font-Poppins p-2 ">
       {inputs.map((item) => {

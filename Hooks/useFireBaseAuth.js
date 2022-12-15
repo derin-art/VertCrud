@@ -2,6 +2,7 @@ import firebaseApp from "../pages/api/firebase";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import FormData from "form-data";
+import { ItemDataType } from "@/pages/items/[editItem]";
 import { type } from "os";
 import {
   getAuth,
@@ -103,6 +104,43 @@ export default function useFirebaseAuth() {
     }
   };
 
+  const EditItem = async (items, id) => {
+    const formdata = new FormData();
+    formdata.append("name", items.name.changed);
+    formdata.append("price", items.price.changed);
+    formdata.append("collection", items.itemCollection.changed);
+    formdata.append("Description", items.Description.changed);
+    items.urls.forEach((url) => {
+      if (url.actFile) {
+        formdata.append(url.imgType, url.actFile);
+      }
+    });
+    const forDeletionArr = items.urls.map((url) => {
+      if (url.forDeletion) {
+        console.log(url.imgType);
+        return url.imgType;
+      } else return;
+    });
+
+    const filteredForDeleteArr = forDeletionArr.filter((imgType) => {
+      if (imgType) {
+        return imgType;
+      } else return;
+    });
+
+    console.log(filteredForDeleteArr);
+
+    formdata.append("forDeletionArr", filteredForDeleteArr);
+    const data = await axios
+      .patch(`/api/editItem?id=${id}`, formdata)
+      .catch((err) => {
+        console.log(err);
+      });
+    if (data) {
+      console.log("200", data);
+    }
+  };
+
   function SignIn(email, password) {
     return signInWithEmailAndPassword(auth, email, password)
       .then(() => {
@@ -145,6 +183,7 @@ export default function useFirebaseAuth() {
     authUser,
     variants,
     getItems,
+    EditItem,
     loading,
     SignOut,
     SignInWithEmailAndPassword,

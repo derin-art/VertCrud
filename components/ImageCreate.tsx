@@ -2,6 +2,7 @@ import AddImageIcon from "public/Icons/addImageIcon";
 import P1 from "public/ImagePlaceholder/P4.png";
 import Image from "next/image";
 import { useState } from "react";
+import EditIcon from "public/Icons/editIcon";
 import { type } from "os";
 
 type ImageCreateProps = {
@@ -28,11 +29,18 @@ export default function ImageCreate(props: ImageCreateProps) {
           className="flex w-fit items-center justify-center cursor-pointer relative"
         >
           {AddImageIcon(
-            `absolute ${
+            `absolute border p-1 hidden border-gray-400 rounded-full ${
               imageSrc && "hidden"
             } group-hover:fill-black   fill-gray-400 duration-300`,
             "40",
             "40"
+          )}
+          {EditIcon(
+            `absolute border ${
+              imageSrc
+                ? "fill-white opacity-0 group-hover:opacity-100 duration-300 border-white"
+                : "border-black"
+            } `
           )}
           <Image
             height="400"
