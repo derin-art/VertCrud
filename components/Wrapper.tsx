@@ -15,8 +15,14 @@ export default function Wrapper(props: WrapperProps) {
   useEffect(() => {
     if (router.pathname != "/") {
       console.log(authUser, loading, "NewPage");
-      if (!authUser) {
-        router.push("/");
+      if (typeof window !== "undefined") {
+        const authStateSession = !window.sessionStorage.getItem("authState");
+        console.log("auth", authStateSession);
+        if (!authStateSession) {
+          router.push("/");
+        }
+      } else {
+        if (!authUser) router.push("/");
       }
     }
   }, [authUser, loading]);

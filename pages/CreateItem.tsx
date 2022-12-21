@@ -1,22 +1,21 @@
 import { motion, AnimatePresence } from "framer-motion";
 import ImageView from "@/components/ImageView";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import CreateItemMenu from "@/components/CreateItemMenu";
 import MobileCreateItemMenu from "@/components/Mobile/MobileCreateItemMenu";
+import useCommonToastifyOptions from "Hooks/useCommonToastifyOptions";
 import EditIcon from "public/Icons/editIcon";
 import useMediaQuery from "Hooks/useMediaQuery";
 import ImageCreate from "@/components/ImageCreate";
-import Test1 from "../public/TestImages/Test1.jpg";
-import Test2 from "../public/TestImages/Test2.jpg";
-import Test3 from "../public/TestImages/Test3.jpg";
-import Test4 from "../public/TestImages/Test4.webp";
-import Test5 from "../public/TestImages/Test5.png";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 import { useAuth } from "context/firebaseUserContext";
 
 export default function CreateItem() {
+  const toastOptions = useCommonToastifyOptions();
   const { CreateItem } = useAuth();
-  const TestImages = [Test1, Test2];
   const inputs = ["Main", "Sec", "Alt"];
+  const [isItemCreated, setItemCreated] = useState(false);
   const [Main, setMain] = useState({ file: null, name: "Main" });
   const [Sec, setSec] = useState({ file: null, name: "Sec" });
   const [Alt, setAlt] = useState({ file: null, name: "Alt" });
@@ -27,6 +26,7 @@ export default function CreateItem() {
     price: 0,
     collection: "Casual",
     Description: "",
+    CollectionDate: "",
   });
 
   const variants = {
@@ -124,8 +124,39 @@ export default function CreateItem() {
     }
   }
 
+  console.log(productDetails);
+
+  const toastId: any = useRef(null);
+
+  const notify = () => {
+    toastId.current = toast("Creating Item 🐸", {
+      autoClose: false,
+      isLoading: true,
+    });
+  };
+
+  const update = () => {
+    toast.update(toastId.current, {
+      type: toast.TYPE.SUCCESS,
+      autoClose: 3000,
+      isLoading: false,
+      render: "Item Created Successfully 👍",
+    });
+  };
+
+  const ifErrorUpdate = () => {
+    toast.update(toastId.current, {
+      type: toast.TYPE.ERROR,
+      autoClose: 5000,
+      isLoading: false,
+      render:
+        "An error occured. Please check your internet connection and try again 😓",
+    });
+  };
+
   return (
-    <div className="w-screen p-8 font-Poppins">
+    <div className="w-screen md:p-8 pt-12 font-Poppins p-2">
+      <ToastContainer></ToastContainer>
       <button
         onClick={() => {
           setIsMobileMenuOpen((prev) => !prev);
@@ -193,7 +224,7 @@ export default function CreateItem() {
           ></CreateItemMenu>
         </motion.div>
 
-        <div className="-mt-4 w-full ">
+        <div className="-mt-2 w-full ">
           <div className="flex border-b justify-end border-black mb-2 text-4xl items-center">
             Create Items
           </div>
@@ -202,20 +233,59 @@ export default function CreateItem() {
               return (
                 <button
                   key={item}
-                  onClick={async () => {
-                    if (!Main.file) return;
-                    if (!productDetails.name) return;
-                    if (!productDetails.price) return;
-                    if (!productDetails.collection) return;
+                  onClick={async (e) => {
+                    if (!Main.file) {
+                      toast.error(
+                        "Main Image file required to create item",
+                        toastOptions
+                      );
 
+                      return;
+                    }
+                    if (!productDetails.name) {
+                      toast.error(
+                        "Product name required to create item",
+                        toastOptions
+                      );
+                      return;
+                    }
+                    if (!productDetails.price) {
+                      toast.error(
+                        "Product Price required to create item",
+                        toastOptions
+                      );
+                      return;
+                    }
+                    if (!productDetails.collection) {
+                      toast.error(
+                        "Product Collection required to create item",
+                        toastOptions
+                      );
+                      return;
+                    }
+                    setItemCreated(true);
+                    notify();
                     await CreateItem({
                       Alt: Alt.file,
                       Main: Main.file,
                       Sec: Sec.file,
                       ...productDetails,
-                    });
+                    })
+                      .then(() => {
+                        setItemCreated(false);
+                        update();
+                        /*  toast.clearWaitingQueue();
+                        toast.success(
+                          "Item created successfully 👍",
+                          toastOptions
+                        ); */
+                      })
+                      .catch((err) => {
+                        setItemCreated(false);
+                        ifErrorUpdate();
+                      });
                   }}
-                  className="ml-4 px-4 p-2 bg-black text-white text-lg "
+                  className="ml-4 px-4 mb-4 md:mb-0 p-2 bg-black text-white text-lg "
                 >
                   {item}
                 </button>

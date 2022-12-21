@@ -8,6 +8,7 @@ type CreateItemMenuProps = {
     price: number;
     collection: string;
     Description: string;
+    CollectionDate?: any;
   };
 };
 
@@ -98,6 +99,18 @@ export default function CreateItemMenu(props: CreateItemMenuProps) {
             );
           })}
         </select>
+      </div>
+      <div className=" w-full flex md:flex-row flex-col h-fit md:mt-12 mt-10 relative">
+        <p className="font-CorUp md:text-lg">Collection Date:</p>
+        <input
+          onChange={(e) => {
+            props.setProductDetails((prev: any) => {
+              return { ...prev, CollectionDate: e.target.value };
+            });
+          }}
+          className="text-black p-2 rounded md:absolute right-0"
+          type={"date"}
+        ></input>
       </div>
     </div>
   );

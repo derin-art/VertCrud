@@ -23,7 +23,10 @@ export default function EditItemMenu(props: EditItemMenuProps) {
       <div>
         {inputs.map((item) => {
           return (
-            <div className="w-full flex flex-col mb-4 lg:text-lg">
+            <div
+              key={item.name}
+              className="w-full flex flex-col mb-4 lg:text-lg"
+            >
               <p className="font-CorUp capitalize">{item.name}</p>
               {item.type === "Textbox" ? (
                 <textarea

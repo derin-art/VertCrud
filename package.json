@@ -36,6 +36,7 @@
     "react-lazy-blur-image": "^0.1.2",
     "react-lazy-load-image-component": "^1.5.6",
     "react-progressive-loader": "^0.4.3",
+    "react-toastify": "^9.1.1",
     "redux": "^4.2.0",
     "ts-node": "^10.9.1"
   },

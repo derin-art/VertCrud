@@ -16,16 +16,16 @@ type ItemsProps = {
 
 export default function Items(props: ItemsProps) {
   const headingRows = ["Name", "Price(USD)", "Collection", "Utility"];
-  console.log("allItems", props.allItems);
+
   const router = useRouter();
   const basePath = router.basePath;
-  console.log(basePath);
+
   const [itemArrayData, setItemArrayData] = useState({
     data: props.allItems.data,
     status: props.allItems.status,
   });
   return (
-    <div className="w-full p-8 relative">
+    <div className="w-full md:p-8 p-2 relative">
       <div className="mt-10 font-Poppins -ml-4 w-full h-fit">
         {itemArrayData.data.length === 0 && (
           <div className="text-5xl border-b border-black w-full">
@@ -34,7 +34,11 @@ export default function Items(props: ItemsProps) {
         )}
       </div>
 
-      <div className="w-full flex border-t border-x stickyheader z-40 bg-black text-white border-black font-Poppins ">
+      <div
+        className={`w-full flex  ${
+          itemArrayData.data.length > 0 && "border-t"
+        } border-x stickyheader z-40 bg-black text-white border-black font-Poppins `}
+      >
         {itemArrayData.data.length > 0 &&
           headingRows.map((item, index) => {
             return (
@@ -54,7 +58,6 @@ export default function Items(props: ItemsProps) {
       <div className="">
         {itemArrayData.data &&
           itemArrayData.data.map((item: any, index) => {
-            console.log(itemArrayData.data.length, index);
             return (
               <ShoppingItemLink
                 setFunct={setItemArrayData}
@@ -72,16 +75,12 @@ export default function Items(props: ItemsProps) {
   );
 }
 
-export async function getServerSideProps(req: any) {
-  const origin =
-    typeof window !== "undefined" && window.location.origin
-      ? window.location.origin
-      : "";
-
-  console.log(origin);
+export async function getServerSideProps(context: any) {
+  const { req, query, res, asPath, pathname } = context;
+  const host = req.headers.host;
 
   const data: any = await axios
-    .get(`http://localhost:3000/api/Images`)
+    .get(`http://${host}/api/Images`)
     .catch((err) => {
       console.log(err);
       return;

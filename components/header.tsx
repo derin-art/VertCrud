@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { useAuth } from "context/firebaseUserContext";
 import Link from "next/link";
 
 export default function Header() {
@@ -7,6 +8,8 @@ export default function Header() {
     { name: "create", to: "/CreateItem" },
   ];
   const router = useRouter();
+
+  const { SignOut } = useAuth();
 
   const pathName = router.pathname;
   const isOnCreateItems = pathName === "/CreateItem";
@@ -21,7 +24,7 @@ export default function Header() {
       } p-1 z-40`}
     >
       <div
-        className={`font-CorUp text-3xl hidden md:block md:text-6xl md:ml-4 md:mt-0 -mt-1 ${
+        className={`font-CorUp text-3xl md:relative absolute left-2   block md:text-6xl md:ml-4 md:mt-0 -mt-1 ${
           isOnCreateItems || isOnEditItems ? "text-white" : "text-black"
         }  `}
       >
@@ -35,7 +38,14 @@ export default function Header() {
             </Link>
           );
         })}
-        <button className="ml-4 lg:ml-8">Logout</button>
+        <button
+          onClick={async () => {
+            SignOut();
+          }}
+          className="ml-4 lg:ml-8"
+        >
+          Logout
+        </button>
       </div>
     </div>
   );

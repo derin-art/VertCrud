@@ -4,6 +4,8 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { AnimatePresence } from "framer-motion";
 import UserLoginHead from "../public/Icons/userLoginHead";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import useMediaQuery from "../Hooks/useMediaQuery";
 import { async } from "@firebase/util";
 import { useRouter } from "next/router";
@@ -29,14 +31,53 @@ export default function LoginInput(props: LoginProps) {
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
   const [newUser, setNewUser] = useState(false);
+
+  const commonToastifyOptions = {
+    position: toast.POSITION.BOTTOM_CENTER,
+    className: "text-sm",
+  };
   const LoginFuc = async (email: string, password: string) => {
     console.log("senr");
     await SignInWithEmailAndPassword(email, password)
-      .then(() => {
+      .then((auth) => {
         router.push("/items");
+        const functionThatReturnPromise = () =>
+          new Promise((resolve) => setTimeout(resolve, 10000));
+        toast.promise(functionThatReturnPromise, {
+          pending: "Gathering Store Data 🐸",
+          success: "👌",
+          error: "Please Check your internet and reload this page 😓",
+        });
       })
       .catch((err) => {
-        console.log(err);
+        switch (err.code) {
+          case "auth/user-not-found":
+            toast.error("User Not found", {
+              position: toast.POSITION.BOTTOM_CENTER,
+              className: "text-sm",
+            });
+            break;
+          case "auth/wrong-password":
+            toast.error("Wrong Password", {
+              position: toast.POSITION.BOTTOM_CENTER,
+              className: "text-sm",
+            });
+            break;
+          case "auth/invalid-email":
+            toast.error("Invalid Email", {
+              position: toast.POSITION.BOTTOM_CENTER,
+              className: "text-sm",
+            });
+            break;
+
+          default:
+            toast.error("Bad Connection", {
+              position: toast.POSITION.BOTTOM_CENTER,
+              className: "text-sm",
+            });
+            break;
+        }
+        return;
       });
   };
   const CreateUserFuc = async (email: string, password: string) => {
@@ -63,6 +104,7 @@ export default function LoginInput(props: LoginProps) {
 
   return (
     <div className="flex flex-col w-full h-full items-center justify-center font-Poppins">
+      <ToastContainer></ToastContainer>
       <div className="h-[300px] w-fit flex items-center flex-col justify-center mt-32">
         <AnimatePresence>
           <motion.div
@@ -147,6 +189,19 @@ export default function LoginInput(props: LoginProps) {
                 <div className="flex w-full">
                   <button
                     onClick={() => {
+                      if (!registerEmail) {
+                        toast.error(
+                          "Please Input an Email",
+                          commonToastifyOptions
+                        );
+                        return;
+                      }
+                      if (!registerPassword) {
+                        toast.error(
+                          "Please Input a Password",
+                          commonToastifyOptions
+                        );
+                      }
                       CreateUserFuc(registerEmail, registerPassword);
                     }}
                     className="border p-4 border-black text-white bg-black w-full"

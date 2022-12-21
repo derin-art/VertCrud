@@ -61,13 +61,7 @@ export default function useFirebaseAuth() {
   const SignInWithEmailAndPassword = async (email, password) => {
     console.log("Sent");
 
-    return signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        console.log("Signed In");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    return signInWithEmailAndPassword(auth, email, password);
   };
 
   const getItems = async () => {
@@ -153,6 +147,9 @@ export default function useFirebaseAuth() {
 
   const SignOut = () => {
     return signOut(auth).then(() => {
+      if (typeof window !== "undefined") {
+        window.sessionStorage.setItem("authState", null);
+      }
       clear();
     });
   };

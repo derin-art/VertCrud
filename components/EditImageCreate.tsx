@@ -4,14 +4,16 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import React, { useState } from "react";
 import { Defer, Img } from "react-progressive-loader";
 import EditIcon from "../public/Icons/editIcon";
-import DeleteIcon from "public/Icons/deleteIcon";
-import P1 from "public/ImagePlaceholder/P4.png";
-import ReverseIcon from "public/Icons/reverseIcon";
+import DeleteIcon from "../public/Icons/deleteIcon";
+import P1 from "../public/ImagePlaceholder/P4.png";
+
+import ReverseIcon from "../public/Icons/reverseIcon";
 
 type EditImageCreateProps = {
   blurUrl?: string;
   imgUrl?: string;
   imgType: string;
+  markedForDeletion: boolean;
   changedUrl: string;
   changeFunc: (imgType: string, file: any, e: any) => void;
   setMarkedForDeletion: any;
@@ -32,19 +34,23 @@ export default function EditImageCreate(props: EditImageCreateProps) {
             onClick={() => {
               props.setUpforDelete(props.imgType);
             }}
-            className=" border border-black relative"
+            className=" group border-black relative "
           >
             <div className="h-full w-full bg-gray-300 absolute opacity-0"></div>
-            {DeleteIcon("hover:fill-green-400 ")}
+            {DeleteIcon(
+              ` group-hover:fill-gray-700 duration-300 ${
+                props.markedForDeletion ? "fill-red-500" : "fill-black"
+              }`
+            )}
           </button>
           <button
-            className="border border-black"
+            className="group border-black group"
             onClick={() => {
               props.reverseAction(props.imgType, true);
             }}
           >
-            <div className="h-full w-full bg-gray-300 absolute opacity-0"></div>
-            {ReverseIcon("hover:fill-green-400")}
+            <div className="h-full w-full bg-gray-300 absolute opacity-0 "></div>
+            {ReverseIcon("group-hover:fill-green-400 duration-300")}
           </button>
         </div>
         <p className="absolute -top-[0px] font-Poppins right-0 text-sm p-2 bg-black text-white rounded-bl-lg z-20">
@@ -58,7 +64,7 @@ export default function EditImageCreate(props: EditImageCreateProps) {
           src={props.changedUrl ? props.changedUrl : P1.src}
           placeholderSrc={props.blurUrl}
           delayTime={300}
-          className="h-[400px] w-[300px] object-cover border border-black"
+          className="h-[400px] w-[300px] object-cover border border-black shadow-md"
           loading={"lazy"}
           height={400}
           width={300}
@@ -73,6 +79,12 @@ export default function EditImageCreate(props: EditImageCreateProps) {
         type="file"
         accept="image/*"
       ></input>
+      {props.markedForDeletion && (
+        <div className="font-Poppins text-red-500 w-[200px] text-xs">
+          This Image will be deleted from the item on Save. Click on the bin
+          icon to reverse this.
+        </div>
+      )}
     </div>
   );
 }
