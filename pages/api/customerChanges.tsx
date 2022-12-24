@@ -1,7 +1,10 @@
 import nextConnect from "next-connect";
 import { NextApiRequest, NextApiResponse } from "next";
+import NextCors from "nextjs-cors";
+const cors = require("cors");
 import Mongo from "DataBase/Mongo";
 import { async } from "@firebase/util";
+import { use } from "react";
 
 const { Customer } = require("../../Models/customer");
 
@@ -13,26 +16,102 @@ const handler = nextConnect<NextApiRequest, NextApiResponse>({
   onNoMatch: (req, res) => {
     res.status(404).end("Page is not found");
   },
-});
+})
+  .options("*", cors())
+  .use(cors({ origin: "*" }));
+
+const allowCors = (fn: any) => async (req: any, res: any) => {
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  res.setHeader("Access-Control-Allow-Origin", "*");
+
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET,OPTIONS,PATCH,DELETE,POST,PUT,get"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+  );
+  if (req.method === "OPTIONS") {
+    res.status(200).end();
+    return;
+  }
+  return await fn(req, res);
+};
 
 handler
-  .get(async (req, res) => {})
+  .use(async (req, res, next) => {
+    await NextCors(req, res, {
+      // Options
+      methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "get", "post"],
+      origin: "*",
+      optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+    });
+    next();
+  })
+  .get(async (req, res) => {
+    await NextCors(req, res, {
+      // Options
+      methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "get"],
+      origin: "*",
+      optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+    });
+    await Mongo().catch((err) => {
+      console.log(err);
+      return;
+    });
+    try {
+      const data = await Customer.find({});
+      return res.status(200).send(data);
+    } catch (err) {
+      console.log(err);
+      return;
+    }
+  })
   .post(async (req, res) => {
+    await NextCors(req, res, {
+      // Options
+      methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "get", "post"],
+      origin: "*",
+      optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+    });
     await Mongo().catch((err) => {
       console.log(err);
       return;
     });
 
     try {
+      console.log("Sent", req.query.name, req.query.email);
       const data = await Customer.create({
-        name: req.body.name,
-        email: req.body.email,
+        name: req.query.name,
+        email: req.query.email,
       });
       return res.status(200).send(data);
     } catch (err) {
       console.log(err);
     }
   })
-  .patch(async (req, res) => {});
+  .put(async (req, res) => {
+    await Mongo().catch((err) => {
+      console.log(err);
+      return res.status(500).send(err);
+    });
+    const data = await Customer.findOne({ email: req.query.email });
+    if (data.WishList.find((item: any) => item._id === req.body.item._id)) {
+      console.log("smds");
+      return res.status(433).send("Item already whishlisted");
+    }
 
-export default handler;
+    try {
+      const data = await Customer.findOneAndUpdate(
+        { email: req.query.email },
+        { $push: { WishList: req.body.item } },
+        { new: true }
+      );
+      return res.status(200).send(data);
+    } catch (err) {
+      console.log(err);
+    }
+  });
+
+export default allowCors(handler);

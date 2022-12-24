@@ -6,7 +6,7 @@ const customerSchema = new ModelSchema(
   {
     name: {
       type: String,
-      required: [true, "Shopping Item name is a required"],
+      required: [true, "User name is a required"],
     },
     email: {
       type: String,

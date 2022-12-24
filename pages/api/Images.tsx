@@ -101,6 +101,7 @@ handler
       return res.status(200).send(allShoppingItems);
     } catch (err) {
       console.log(err);
+      return;
     }
   })
   .delete(async (req, res) => {
