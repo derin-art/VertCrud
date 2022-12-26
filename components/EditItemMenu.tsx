@@ -41,7 +41,7 @@ export default function EditItemMenu(props: EditItemMenuProps) {
                       };
                     });
                   }}
-                  className=" p-2 text-black rounded"
+                  className=" p-2 text-black rounded bg-white"
                   name={item.name}
                   key={item.name}
                   defaultValue={item.originalVal}
@@ -65,7 +65,7 @@ export default function EditItemMenu(props: EditItemMenuProps) {
                   }}
                   key={item.name}
                   defaultValue={item.originalVal}
-                  className=" p-2 text-black rounded"
+                  className=" p-2 text-black rounded bg-white"
                 ></input>
               )}
             </div>
@@ -88,7 +88,7 @@ export default function EditItemMenu(props: EditItemMenuProps) {
             });
           }}
           name="itemCollection"
-          className="p-2 text-black absolute right-0 text-base rounded"
+          className="p-2 text-black absolute right-0 text-base rounded bg-white"
           placeholder="collection"
         >
           {collection.map((item) => {

@@ -8,5 +8,7 @@ export default function useCollections() {
     "Shirts",
     "Jacket",
     "Collection",
+    "2021",
+    "Future",
   ];
 }

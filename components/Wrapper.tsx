@@ -28,7 +28,7 @@ export default function Wrapper(props: WrapperProps) {
   }, [authUser, loading]);
 
   return (
-    <div className="h-screen w-full">
+    <div className="h-screen w-full bg-white">
       <div className="w-full ">
         <Header></Header>
       </div>

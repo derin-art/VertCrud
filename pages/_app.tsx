@@ -11,7 +11,11 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <AuthUserProvider>
       <Wrapper>
-        <div className={`pt-4 ${pathName === "/" && "pt-0 w-full h-full "} `}>
+        <div
+          className={`pt-4 ${
+            pathName === "/" && "pt-0 w-full h-full bg-white"
+          } `}
+        >
           <Component {...pageProps} />
         </div>
       </Wrapper>

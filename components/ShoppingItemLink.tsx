@@ -17,7 +17,7 @@ export default function ShoppingItemLink(props: ShoppingItemLinkProps) {
   const data = [props.name, props.price, props.collection];
   return (
     <div
-      className={`flex w-full border-t border-x font-Poppins md:text-base text-xs border-black ${
+      className={`flex w-full border-t border-x font-Poppins text-black md:text-base text-xs border-black ${
         props.isLastItem && "border-b"
       }`}
     >

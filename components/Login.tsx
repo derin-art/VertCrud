@@ -8,7 +8,7 @@ export default function Login() {
     CreateUserWithEmailAndPassword,
   } = useAuth();
   return (
-    <div className="w-full h-full flex sm:flex-row flex-col items-center justify-center">
+    <div className="w-full h-full flex sm:flex-row flex-col items-center justify-center text-black">
       <div className="sm:hidden absolute top-0 font-CorUp text-4xl">
         <span className="text-6xl">V</span>
         ert

@@ -50,7 +50,7 @@ export default function CreateItemMenu(props: CreateItemMenuProps) {
                     });
                   }}
                   value={item.propVal}
-                  className="text-black p-2 w-full right-2  rounded text-base"
+                  className="text-black p-2 w-full right-2  rounded text-base bg-white"
                   placeholder={item.placeholder}
                 ></textarea>
               ) : (
@@ -70,7 +70,7 @@ export default function CreateItemMenu(props: CreateItemMenuProps) {
                   }}
                   placeholder={item.placeholder}
                   type={`${item.type === "Number" && "number"}`}
-                  className="text-black p-2 w-full right-2  rounded text-base"
+                  className="text-black p-2 w-full right-2  rounded text-base bg-white"
                 ></input>
               )}
             </div>
@@ -82,7 +82,7 @@ export default function CreateItemMenu(props: CreateItemMenuProps) {
         <select
           placeholder="Collection"
           name="collection"
-          className="lg:absolute right-0 p-2 font-Poppins text-base text-black rounded"
+          className="lg:absolute right-0 p-2 font-Poppins text-base text-black rounded bg-white"
           id="col"
           value={props.productDetails.collection}
           onChange={(e) => {
@@ -100,7 +100,7 @@ export default function CreateItemMenu(props: CreateItemMenuProps) {
           })}
         </select>
       </div>
-      <div className=" w-full flex md:flex-row flex-col h-fit md:mt-12 mt-10 relative">
+      <div className=" w-full flex md:flex-row flex-col h-fit md:mt-12 mt-10 relative hidden">
         <p className="font-CorUp md:text-lg">Collection Date:</p>
         <input
           onChange={(e) => {
@@ -108,7 +108,7 @@ export default function CreateItemMenu(props: CreateItemMenuProps) {
               return { ...prev, CollectionDate: e.target.value };
             });
           }}
-          className="text-black p-2 rounded md:absolute right-0"
+          className="text-black p-2 rounded md:absolute right-0 bg-white"
           type={"date"}
         ></input>
       </div>

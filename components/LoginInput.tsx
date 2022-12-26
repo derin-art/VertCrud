@@ -103,7 +103,7 @@ export default function LoginInput(props: LoginProps) {
   };
 
   return (
-    <div className="flex flex-col w-full h-full items-center justify-center font-Poppins">
+    <div className="flex flex-col w-full h-full items-center justify-center font-Poppins bg-white text-black">
       <ToastContainer></ToastContainer>
       <div className="h-[300px] w-fit flex items-center flex-col justify-center mt-32">
         <AnimatePresence>
@@ -131,7 +131,7 @@ export default function LoginInput(props: LoginProps) {
                     }}
                     placeholder="Input Email"
                     type="email"
-                    className="border-black p-4 border mb-6"
+                    className="border-black p-4 border mb-6 bg-white max-w-[300px]"
                   ></input>
                 </div>
                 <div>
@@ -142,7 +142,7 @@ export default function LoginInput(props: LoginProps) {
                     name="password"
                     placeholder="Input Password"
                     type="password"
-                    className="border-black p-4 border mb-6"
+                    className="border-black p-4 border mb-6 bg-white max-w-[300px]"
                   ></input>
                 </div>
                 <div className="flex w-full">
@@ -172,7 +172,7 @@ export default function LoginInput(props: LoginProps) {
                     }}
                     placeholder="Input Email"
                     type="email"
-                    className="border-black p-4 border mb-6"
+                    className="border-black p-4 border mb-6 bg-white max-w-[300px]"
                   ></input>
                 </div>
                 <div>
@@ -183,7 +183,7 @@ export default function LoginInput(props: LoginProps) {
                     name="password"
                     placeholder="Input Registration Password"
                     type="password"
-                    className="border-black p-4 border mb-6"
+                    className="border-black p-4 border mb-6 bg-white max-w-[300px]"
                   ></input>
                 </div>
                 <div className="flex w-full">

@@ -208,9 +208,9 @@ export default function EditItem(props: EditItemProps) {
   };
 
   return (
-    <div>
+    <div className="bg-white">
       <ToastContainer></ToastContainer>
-      <div className="flex flex-col w-full items-end justify-end">
+      <div className="flex flex-col w-full items-end justify-end bg-white">
         <button
           onClick={() => {
             setIsMobileMenuOpen((prev) => !prev);

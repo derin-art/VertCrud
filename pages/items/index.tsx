@@ -25,7 +25,7 @@ export default function Items(props: ItemsProps) {
     status: props.allItems.status,
   });
   return (
-    <div className="w-full md:p-8 p-2 relative">
+    <div className="w-full md:p-8 p-2 relative bg-white">
       <div className="mt-10 font-Poppins -ml-4 w-full h-fit">
         {itemArrayData.data.length === 0 && (
           <div className="text-5xl border-b border-black w-full">
