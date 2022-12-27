@@ -26,7 +26,7 @@ const allowCors = (fn: any) => async (req: any, res: any) => {
 
   res.setHeader(
     "Access-Control-Allow-Methods",
-    "GET,OPTIONS,PATCH,DELETE,POST,PUT,get"
+    "GET,OPTIONS,PATCH,DELETE,POST,PUT,get,put,post"
   );
   res.setHeader(
     "Access-Control-Allow-Headers",
