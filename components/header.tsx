@@ -36,7 +36,7 @@ export default function Header() {
             isOnCreateItems && "hidden"
           }`}
         >
-          Click on "Vert" to access the store of this backend
+          Click on &quot;Vert&quot; to access the store of this backend
         </p>
       </div>
       <div className="flex absolute md:right-8 right-4 right p-1 font-Poppins text-sm text-black">

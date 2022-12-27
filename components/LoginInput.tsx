@@ -251,8 +251,8 @@ export default function LoginInput(props: LoginProps) {
         }}
         className="mb-24 mt-6  text-xs max-w-[300px] text-black"
       >
-        Don't want to create yet another fake account to check out a project?
-        Click here Login With Mock User.
+        Don&apos;t want to create yet another fake account to check out a
+        project? Click here Login With Mock User.
       </button>
     </div>
   );
