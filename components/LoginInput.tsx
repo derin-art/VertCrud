@@ -19,7 +19,8 @@ type LoginProps = {
 
 export default function LoginInput(props: LoginProps) {
   const router = useRouter();
-  const { SignInWithEmailAndPassword } = useAuth();
+  const { SignInWithEmailAndPassword, CreateUserWithEmailAndPassword } =
+    useAuth();
   const { height, width } = useMediaQuery();
 
   console.log(useMediaQuery());
@@ -81,7 +82,29 @@ export default function LoginInput(props: LoginProps) {
       });
   };
   const CreateUserFuc = async (email: string, password: string) => {
-    return props.CreateUserWithEmailAndPassword(email, password);
+    await CreateUserWithEmailAndPassword(email, password)
+      .then(() => {
+        toast.success("User Created Successfully", {
+          position: toast.POSITION.BOTTOM_CENTER,
+          className: "text-sm",
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        switch (err.code) {
+          case "auth/email-already-in-use":
+            toast.error("Email Already in use", {
+              position: toast.POSITION.BOTTOM_CENTER,
+              className: "text-sm",
+            });
+            break;
+          default:
+            toast.error("Bad connection", {
+              position: toast.POSITION.BOTTOM_CENTER,
+              className: "text-sm",
+            });
+        }
+      });
   };
   let xDisplacement = isSmall ? 30 : 100;
   const variants = {
@@ -218,9 +241,18 @@ export default function LoginInput(props: LoginProps) {
         onClick={() => {
           setNewUser((prev) => !prev);
         }}
-        className="mb-32 mt-8 text-xs "
+        className="mb-30 md:mt-12 mt-16 text-xs "
       >
         {!newUser ? "New User?" : "Previous User?"}
+      </button>
+      <button
+        onClick={async () => {
+          await LoginFuc("guy@gmail.com", "password1");
+        }}
+        className="mb-24 mt-6  text-xs max-w-[300px] text-black"
+      >
+        Don't want to create yet another fake account to check out a project?
+        Click here Login With Mock User.
       </button>
     </div>
   );

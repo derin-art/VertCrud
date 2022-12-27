@@ -3,6 +3,7 @@ import DeleteIcon from "../public/Icons/deleteIcon";
 import EditIcon from "../public/Icons/editIcon";
 import axios from "axios";
 import Link from "next/link";
+import { ToastContainer, toast } from "react-toastify";
 
 type ShoppingItemLinkProps = {
   name: string;
@@ -39,14 +40,18 @@ export default function ShoppingItemLink(props: ShoppingItemLinkProps) {
         <div className="relative group">
           <button
             onClick={async () => {
+              const disabled = true;
+              toast.info(
+                "Delete button is disabled for demo because this backend serves my store project 😐",
+                { className: "text-sm", autoClose: 6000 }
+              );
+              if (disabled) return;
               const data = await axios
                 .delete(`http://localhost:3000/api/Images?id=${props.id}`)
                 .catch((err) => {
                   console.log(err);
                 });
               if (data) {
-                /*   { data: data.data, status: data.status } */
-                console.log(data.data);
                 props.setFunct((prev: any) => {
                   const newData = prev.data.filter((item: { _id: string }) => {
                     if (item._id != data.data._id) {

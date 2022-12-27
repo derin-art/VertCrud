@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import ImageTest from "@/components/ImageTest";
 import { type } from "os";
+import { ToastContainer } from "react-toastify";
 import { useRouter } from "next/router";
 import { useAuth } from "../../context/firebaseUserContext";
 import absoluteUrl from "next-absolute-url";
@@ -56,6 +57,7 @@ export default function Items(props: ItemsProps) {
           })}
       </div>
       <div className="">
+        <ToastContainer></ToastContainer>
         {itemArrayData.data &&
           itemArrayData.data.map((item: any, index) => {
             return (

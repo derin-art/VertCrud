@@ -60,13 +60,23 @@ handler
       console.log(err);
       return;
     });
-    try {
-      console.log(req.query.email);
-      const data = await Customer.findOne({ email: req.query.email });
-      return res.status(200).send(data);
-    } catch (err) {
-      console.log(err);
-      return;
+    if (req.query.id) {
+      try {
+        const data = await Customer.findOne({ _id: req.query.id });
+        return res.status(200).send(data);
+      } catch (err) {
+        console.log(err);
+        return;
+      }
+    } else {
+      try {
+        console.log(req.query.email);
+        const data = await Customer.findOne({ email: req.query.email });
+        return res.status(200).send(data);
+      } catch (err) {
+        console.log(err);
+        return;
+      }
     }
   })
   .post(async (req, res) => {
@@ -98,11 +108,11 @@ handler
       return res.status(500).send(err);
     });
     const data = await Customer.findOne({ email: req.query.email });
-    if (req.query.Remove) {
-      const newData = data.WishList.filter(
-        (item: any) => item._id != req.body.item._id
-      );
-      data.WishList = newData;
+    if (req.query.Bought) {
+      console.log(data);
+
+      data.Bought.push(...req.body.item);
+
       try {
         const newUpdatedMongoData = await Customer.findOneAndUpdate(
           { email: req.query.email },
@@ -114,19 +124,36 @@ handler
         console.log(err);
       }
     } else {
-      if (data.WishList.find((item: any) => item._id === req.body.item._id)) {
-        console.log("smds");
-        return res.status(433).send("Item already whishlisted");
-      }
-      try {
-        const data = await Customer.findOneAndUpdate(
-          { email: req.query.email },
-          { $push: { WishList: req.body.item } },
-          { new: true }
+      if (req.query.Remove) {
+        const newData = data.WishList.filter(
+          (item: any) => item._id != req.body.item._id
         );
-        return res.status(200).send(data);
-      } catch (err) {
-        console.log(err);
+        data.WishList = newData;
+        try {
+          const newUpdatedMongoData = await Customer.findOneAndUpdate(
+            { email: req.query.email },
+            data,
+            { new: true }
+          );
+          return res.status(200).send(newUpdatedMongoData);
+        } catch (err) {
+          console.log(err);
+        }
+      } else {
+        if (data.WishList.find((item: any) => item._id === req.body.item._id)) {
+          console.log("smds");
+          return res.status(433).send("Item already whishlisted");
+        }
+        try {
+          const data = await Customer.findOneAndUpdate(
+            { email: req.query.email },
+            { $push: { WishList: req.body.item } },
+            { new: true }
+          );
+          return res.status(200).send(data);
+        } catch (err) {
+          console.log(err);
+        }
       }
     }
   });
