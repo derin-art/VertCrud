@@ -62,7 +62,6 @@ export default function ImageCreate(props: ImageCreateProps) {
                   return;
                 }
                 var reader = new FileReader();
-                console.log(selectedFile);
 
                 reader.onload = function (event: any) {
                   src = event.target.result;

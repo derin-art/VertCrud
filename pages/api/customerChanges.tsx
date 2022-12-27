@@ -103,6 +103,12 @@ handler
     }
   })
   .put(async (req, res) => {
+    await NextCors(req, res, {
+      // Options
+      methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "get", "post"],
+      origin: "*",
+      optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+    });
     await Mongo().catch((err) => {
       console.log(err);
       return res.status(500).send(err);
@@ -141,7 +147,6 @@ handler
         }
       } else {
         if (data.WishList.find((item: any) => item._id === req.body.item._id)) {
-          console.log("smds");
           return res.status(433).send("Item already whishlisted");
         }
         try {

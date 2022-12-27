@@ -63,6 +63,7 @@ export default function EditImageCreate(props: EditImageCreateProps) {
         <LazyLoadImage
           src={props.changedUrl ? props.changedUrl : P1.src}
           placeholderSrc={props.blurUrl}
+          alt={"Test Image"}
           delayTime={300}
           className="h-[400px] w-[300px] object-cover border border-black shadow-md"
           loading={"lazy"}

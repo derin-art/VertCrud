@@ -14,7 +14,7 @@ export default function Header() {
   const pathName = router.pathname;
   const isOnCreateItems = pathName === "/CreateItem";
   const isOnEditItems = pathName === "/items/[editItem]";
-  console.log(pathName, isOnEditItems);
+
   return (
     <div
       className={`w-full fixed  ${
