@@ -30,7 +30,11 @@ export default function Header() {
             : "text-black"
         }  `}
       >
-        <a target={"_blank"} href="https://vert-front.vercel.app/">
+        <a
+          rel="noreferrer"
+          target={"_blank"}
+          href="https://vert-front.vercel.app/"
+        >
           Vert
         </a>
 

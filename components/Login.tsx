@@ -10,6 +10,7 @@ export default function Login() {
   return (
     <div className="w-full h-full flex sm:flex-row flex-col items-center justify-center text-black">
       <a
+        rel="noreferrer"
         href="https://vert-front.vercel.app/"
         target={"_blank"}
         className="sm:hidden absolute top-0 font-CorUp text-4xl"
@@ -19,6 +20,7 @@ export default function Login() {
       </a>
       <div className="w-2/4 h-full bg-black flex items-center justify-center sm:flex hidden">
         <a
+          rel="noreferrer"
           href="https://vert-front.vercel.app/"
           target={"_blank"}
           className="text-white font-CorUp"
