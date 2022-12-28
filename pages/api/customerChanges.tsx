@@ -126,7 +126,7 @@ handler
     });
 
     await Mongo().catch((err) => {
-      console.log(err, "err");
+      console.log(err, "er");
       return res.status(500).send(err);
     });
     const data = await Customer.findOne({ email: req.query.email });
