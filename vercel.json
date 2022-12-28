@@ -1,12 +1,12 @@
 {
+  "rewrites": [
+    {
+      "source": "/api/:match*",
+      "destination": "https://api.endpoint.url/:match*"
+    }
+  ],
   "headers": [
     {
-      "rewrites": [
-        {
-          "source": "/api/:match*",
-          "destination": "https://api.endpoint.url/:match*"
-        }
-      ],
       "source": "/api/(.*)",
       "headers": [
         {
