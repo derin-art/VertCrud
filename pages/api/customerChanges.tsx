@@ -47,6 +47,11 @@ handler
       origin: "*",
       optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     });
+    if (req.method === "OPTIONS") {
+      return res.status(200).json({
+        body: "OK",
+      });
+    }
     next();
   })
   .get(async (req, res) => {
@@ -86,6 +91,11 @@ handler
       origin: "*",
       optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     });
+    if (req.method === "OPTIONS") {
+      return res.status(200).json({
+        body: "OK",
+      });
+    }
     await Mongo().catch((err) => {
       console.log(err);
       return;
@@ -109,6 +119,11 @@ handler
       origin: "*",
       optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     });
+    if (req.method === "OPTIONS") {
+      return res.status(200).json({
+        body: "OK",
+      });
+    }
     await Mongo().catch((err) => {
       console.log(err);
       return res.status(500).send(err);
