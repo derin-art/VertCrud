@@ -9,17 +9,25 @@ export default function Login() {
   } = useAuth();
   return (
     <div className="w-full h-full flex sm:flex-row flex-col items-center justify-center text-black">
-      <div className="sm:hidden absolute top-0 font-CorUp text-4xl">
+      <a
+        href="https://vert-front.vercel.app/"
+        target={"_blank"}
+        className="sm:hidden absolute top-0 font-CorUp text-4xl"
+      >
         <span className="text-6xl">V</span>
         ert
-      </div>
+      </a>
       <div className="w-2/4 h-full bg-black flex items-center justify-center sm:flex hidden">
-        <div className="text-white font-CorUp">
+        <a
+          href="https://vert-front.vercel.app/"
+          target={"_blank"}
+          className="text-white font-CorUp"
+        >
           <span className="text-[300px]">V</span>
           <span className="text-7xl">ert</span>
-        </div>
+        </a>
       </div>
-      <div className="w-2/4 h-full">
+      <div className="w-2/4 h-full md:pt-0 pt-8">
         <LoginInput
           CreateUserWithEmailAndPassword={CreateUserWithEmailAndPassword}
           SignInWithEmailAndPassword={SignInWithEmailAndPassword}

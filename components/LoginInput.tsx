@@ -23,10 +23,8 @@ export default function LoginInput(props: LoginProps) {
     useAuth();
   const { height, width } = useMediaQuery();
 
-  console.log(useMediaQuery());
-
   const isSmall = width ? width < 550 : false;
-  console.log(isSmall);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [registerEmail, setRegisterEmail] = useState("");
@@ -38,7 +36,6 @@ export default function LoginInput(props: LoginProps) {
     className: "text-sm",
   };
   const LoginFuc = async (email: string, password: string) => {
-    console.log("senr");
     await SignInWithEmailAndPassword(email, password)
       .then((auth) => {
         router.push("/items");
@@ -241,7 +238,7 @@ export default function LoginInput(props: LoginProps) {
         onClick={() => {
           setNewUser((prev) => !prev);
         }}
-        className="mb-30 md:mt-12 mt-16 text-xs "
+        className="mb-30 md:mt-12 mt-32 text-xs "
       >
         {!newUser ? "New User?" : "Previous User?"}
       </button>
@@ -249,7 +246,7 @@ export default function LoginInput(props: LoginProps) {
         onClick={async () => {
           await LoginFuc("guy@gmail.com", "password1");
         }}
-        className="mb-24 mt-6  text-xs max-w-[300px] text-black"
+        className="mb-24 mt-2 md:mt-6  text-xs max-w-[300px] text-black"
       >
         Don&apos;t want to create yet another fake account to check out a
         project? Click here Login With Mock User.

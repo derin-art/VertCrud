@@ -30,7 +30,10 @@ export default function Header() {
             : "text-black"
         }  `}
       >
-        Vert
+        <a target={"_blank"} href="https://vert-front.vercel.app/">
+          Vert
+        </a>
+
         <p
           className={`text-sm ml-2 ${isOnEditItems && "hidden"} ${
             isOnCreateItems && "hidden"
