@@ -22,7 +22,9 @@ const handler = nextConnect<NextApiRequest, NextApiResponse>({
 
 const allowCors = (fn: any) => async (req: any, res: any) => {
   if (req.method === "OPTIONS") {
-    res.status(200).end();
+    res.status(200).json({
+      body: "OK",
+    });
     return;
   }
   res.setHeader("Access-Control-Allow-Credentials", true);
