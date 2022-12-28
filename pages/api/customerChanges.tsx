@@ -113,17 +113,18 @@ handler
     }
   })
   .put(async (req, res) => {
+    if (req.method === "OPTIONS") {
+      return res.status(200).json({
+        body: "OK",
+      });
+    }
     await NextCors(req, res, {
       // Options
       methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "get", "post"],
       origin: "*",
       optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     });
-    if (req.method === "OPTIONS") {
-      return res.status(200).json({
-        body: "OK",
-      });
-    }
+
     await Mongo().catch((err) => {
       console.log(err);
       return res.status(500).send(err);
