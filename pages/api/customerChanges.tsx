@@ -44,7 +44,17 @@ handler
   .use(async (req, res, next) => {
     await NextCors(req, res, {
       // Options
-      methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "get", "post"],
+      methods: [
+        "GET",
+        "HEAD",
+        "PUT",
+        "PATCH",
+        "POST",
+        "DELETE",
+        "get",
+        "post",
+        "put",
+      ],
       origin: "*",
       optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     });
@@ -121,7 +131,17 @@ handler
     }
     await NextCors(req, res, {
       // Options
-      methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "get", "post"],
+      methods: [
+        "GET",
+        "HEAD",
+        "PUT",
+        "PATCH",
+        "POST",
+        "DELETE",
+        "get",
+        "post",
+        "put",
+      ],
       origin: "*",
       optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
     });
