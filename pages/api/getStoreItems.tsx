@@ -22,6 +22,7 @@ handler.get(async (req, res) => {
     const data = await ShopItem.find({
       itemCollection: req.query.collection,
     });
+    res.setHeader("Cache-control", "public, max-age=200");
     return res.status(200).send(data);
   } catch (err) {}
 });
